@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="VBUser">
+      <HintPath>..\VBUser\bin\Debug\netstandard2.0\VBUser.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
