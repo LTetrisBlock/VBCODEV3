@@ -15,7 +15,12 @@ namespace UserDefs.DBManager
             int code = 0;
 
 
-            
+            ActiveUserBuilder  activeUserBuilder = new ActiveUserBuilder()
+
+
+
+
+
 
 
 

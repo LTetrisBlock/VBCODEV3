@@ -4,7 +4,7 @@ using WorkGroup;
 
 namespace UserDefs
 {
-   public  abstract class UserConstruct
+   public abstract class UserConstruct
     {
         private int _userID;
         private string _userName;
@@ -12,15 +12,83 @@ namespace UserDefs
         private string _userLName;
     
         private double _userTimeZome;
-
         private int[] _skillsList;
 
-        private int _startTime;
-        private int _endTime;
+
 
         private double x;
         private double y;
+        private TimeInfo _timeInfo; //Helps performe user time based functions. 
 
+
+        /// <summary>
+        /// Creates the time information class, This will peform all time calculations. 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public bool CreateTimeInformation(int s, int e )
+        {
+            bool r = false;
+
+            //If time information is correct then run the function. 
+            if (IsTimeInformationOk(s, e))
+            {
+                _timeInfo = new TimeInfo(s, e);
+                r = true;
+            }
+            return r;
+        }
+
+       /// <summary>
+       /// Checks to see if the user is at work based on 
+       /// the current time 
+       /// </summary>
+       /// <returns></returns>
+        public bool IsUserAtWork()
+        {
+            bool r = false;
+            if (_timeInfo != null)
+            {
+                r = _timeInfo.UserAtWork();
+            }
+
+            return r;
+        }
+
+
+        //Todo: needs to include local timezones changes. 
+        /// <summary>
+        /// Checks to see if the user is at work based on 
+        /// the current time 
+        /// </summary>
+        /// <returns></returns>
+        public double PercentWorkComplete()
+        {
+            double r = -1;
+            if (_timeInfo != null)
+            {
+                r = _timeInfo.PercentTimeFile();
+            }
+
+            return r;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        private bool IsTimeInformationOk(int s, int e)
+        {
+            bool r = true;  //ToDo: make this work. 
+
+
+            return r;
+
+        }
 
 
 
@@ -35,37 +103,15 @@ namespace UserDefs
             gmt3,
         }
 
-
+        /// <summary>
+        /// Determines were to send the data. 
+        /// </summary>
         public enum PushType
         {
             debug,
             ProdDB,
             DebugDB,
             XMlFile,
-        }
-
-
-        /// <summary>
-        /// This will collect the percent of time left in the users stated working day, this will grab the current time and use the start time of the user to calculte the
-        /// how much of they day has passed
-        /// </summary>
-        /// <returns></returns>
-        public double PercentTimeFile()
-        {
-            double timeFilled = 0;
-            string currentTime = DateTime.Now.ToString("HH:mm");
-            string newtime = currentTime.Replace(":", "");
-            int cTime = int.Parse(newtime);
-
-            if (UserAtWork())
-            {
-                timeFilled = (((double)cTime - (double)_startTime)) / ((double)_endTime - (double)_startTime);
-                Console.WriteLine(cTime - _startTime);
-                Console.WriteLine(_endTime - _startTime);
-                Console.WriteLine(timeFilled);
-            }
-
-            return timeFilled;
         }
 
 
@@ -78,29 +124,9 @@ namespace UserDefs
 
         }
 
-        /// <summary>
-        /// Shows that the current time is outside the user work day 
-        /// </summary>
-        /// <returns></returns>
-        public bool UserAtWork()
-        {
-            bool atWork;
-            string currentTime = DateTime.Now.ToString("HH:mm");
-            string newtime = currentTime.Replace(":", "");
 
-            int iStr = int.Parse(newtime);
+        
 
-            if (iStr > _startTime && iStr < _endTime)
-            {
-                atWork = true;
-            }
-            else
-            {
-                atWork = false;
-            }
-
-            return atWork;
-        }
 
 
         public bool PushUserData(PushType pt)

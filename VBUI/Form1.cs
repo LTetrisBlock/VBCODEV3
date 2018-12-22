@@ -7,14 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using VBUser.UserDefs;
-using VBUser.UserDefs.UserCreatePushHelper;
+using VBCORE3;
 
 
 namespace VBUI
 {
     public partial class Form1 : Form
     {
+        VBSession session = new VBSession(-1); //Create a new Session. 
+
+
         public Form1()
         {
             InitializeComponent();
@@ -37,15 +39,15 @@ namespace VBUI
 
         private void btnCreateUser_Click(object sender, EventArgs e)
         {
-            UserCreator uc = new UserCreator();
-            uc.SetFirstName (txtFname.Text);
-            uc.SetLastName(txtLname.Text);
-            uc.SetMiddleInit(txtMname.Text);
+            //UserCreator uc = new UserCreator();
+            //uc.SetFirstName (txtFname.Text);
+            //uc.SetLastName(txtLname.Text);
+            //uc.SetMiddleInit(txtMname.Text);
 
 
-            PushToXMLHelper ptx = new PushToXMLHelper(uc);
-            ptx.CreateUser();
-            uc = null;
+            //PushToXMLHelper ptx = new PushToXMLHelper(uc);
+            //ptx.CreateUser();
+            //uc = null;
 
 
         }
