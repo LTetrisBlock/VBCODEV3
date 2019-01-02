@@ -135,8 +135,7 @@ namespace UserDefs.DBManager
                 {
                     MySqlDataReader reader = myCmd.ExecuteReader();
 
-             
-
+            
                     while (reader.Read())
                     {
                         string[] test = new string[3];
