@@ -8,7 +8,6 @@ using VBUser.SkillsSets;
 {
     /// <summary>
     /// This call is going to represent the active user.
-    /// This call is going to represent the active user.
     /// </summary>
    public  class ActiveUser : UserConstruct
     {
@@ -49,7 +48,7 @@ using VBUser.SkillsSets;
                 AuxUser ax = new AuxUser();
 
                 //Fill auz user with information from DB
-                DbUtitlity.PullInformationForGivenUser(ref ax, _userInGroup[i]);
+                //DbUtitlity.PullInformationForGivenUser(ref ax, _userInGroup[i]);
                 auxs.Add(ax);
             }
             return auxs.ToArray();
@@ -57,11 +56,11 @@ using VBUser.SkillsSets;
             
 
         
-       public double GetPercentDayFinished()
-        {
-            return base.PercentTimeFile();
+       //public double GetPercentDayFinished()
+       // {
+       //  //   return base.PercentTimeFile();
 
-        }
+       // }
 
         private bool BuildUserSKillSet()
         {

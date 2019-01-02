@@ -8,5 +8,35 @@ namespace UserDefs
     {
 
 
+
+
+
+        /// <summary>
+        /// This will build 
+        /// </summary>
+        /// <returns></returns>
+        public int Build()
+        {
+            int code = -1;
+            try
+            {
+
+            }
+            catch
+            {
+
+            }
+
+
+            return code;
+        }
+
+
+
+        public void SendRequestToDB()
+        {
+
+        }
+
     }
 }
