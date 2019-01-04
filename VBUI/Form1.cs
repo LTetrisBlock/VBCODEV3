@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using UserDefs.DBManager;
 using VBCORE3;
 using VBUser.UserDefs;
+using VBUser.Utilities;
 
 namespace VBUI
 {
@@ -27,6 +28,7 @@ namespace VBUI
             InitializeComponent();
 
             txtDB.Text = "dbIconTest";
+            txtDBUserName.Text = "krm2338";
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -70,6 +72,23 @@ namespace VBUI
                     lblConnectedDatabase.Text = "N/A";
                     pnlConnectStatus.BackColor = Color.FromArgb(255, 128, 128);
                 }
+            }
+
+            using (DBSkillManager dbSkillManagerInt = new DBSkillManager())
+            {
+                dbSkillManagerInt.InputCreds(txtDBUserName.Text, txtDBPassword.Text, txtDB.Text);
+                bool connectAtt = dbSkillManagerInt.VerifyLogin();
+                if (connectAtt)
+                {
+                    string[] sArray = dbSkillManagerInt.CollectDataFromDb();
+
+                    cboSkills.Items.Clear();
+                    for (int i = 0; i < sArray.Length; i++)
+                    {
+                        cboSkills.Items.Add(sArray[i]);
+                    }
+                }
+
             }
         }
 
@@ -117,7 +136,8 @@ namespace VBUI
                     uc.SetDbUser(_dbuserName);
                     uc.Setdb(_db);
 
-                    uc.AddNewUserToDatabase();
+
+                    uc.AddNewUserToDatabase(lstSkills.Items.OfType<string>().ToArray());
 
 
                     lstUser.Items.Clear();
@@ -128,6 +148,25 @@ namespace VBUI
             {
                 //Todo: write warning message. 
             }
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSkillAdd_Click(object sender, EventArgs e)
+        {
+            using (DBSkillManager dbSkillManagerInstance = new DBSkillManager())
+            {
+                dbSkillManagerInstance.InputCreds(_dbuserName, _dbPass, _db);
+                dbSkillManagerInstance.CreateANewSkill(txtSkillName.Text, txtSkillDesc.Text);
+            }
+        }
+
+        private void btnAddSkillocal_Click(object sender, EventArgs e)
+        {
+            lstSkills.Items.Add(cboSkills.SelectedItem);
         }
     }
 }

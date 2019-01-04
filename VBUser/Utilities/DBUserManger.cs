@@ -75,26 +75,63 @@ namespace UserDefs.DBManager
         /// With the data string, this will create a new user. 
         /// </summary>
         /// <returns></returns>
-        public int CreateANewUser()
+        public int CreateANewUser(string[] skills)
         {
             int code =  0;
             Login();
-            string Command = "INSERT INTO iconTable (userFirstName, userLastName ) VALUES (@FirstName, @LastName);";
+
+            object pullUserID = "";
+
 
             using (MySqlConnection mConnection = new MySqlConnection(_connectionString))
             {
                 mConnection.Open();
-
+                string Command = "INSERT INTO iconTable (userFirstName, userLastName ) VALUES (@FirstName, @LastName);";
                 using (MySqlCommand myCmd = new MySqlCommand(Command, mConnection))
                 {
                     myCmd.Parameters.AddWithValue("@FirstName", _data[0]);
                     myCmd.Parameters.AddWithValue("@LastName", _data[1]);
-
                     int result = myCmd.ExecuteNonQuery();
+                    pullUserID = myCmd.LastInsertedId.ToString();
+                }
+
+                /*Command = "SELECT userID FROM iconTable ORDER BY userID desc LIMIT 1";
+
+
+                using (MySqlCommand myCmd = new MySqlCommand(Command, mConnection))
+                {
+
+                    MySqlDataReader reader = myCmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        pullUserID = $"{reader.GetString("userID")}";
+                    }
                     mConnection.Close();
+                }
+                */
+
+
+            }
+            
+
+            for (int i = 0; i < skills.Length; i++)
+            {
+                using (MySqlConnection mConnection = new MySqlConnection(_connectionString))
+                {
+                    mConnection.Open();
+                    string Command = "INSERT INTO userSkillTable (userID, skillID ) VALUES (@userID, @skillID);";
+                    using (MySqlCommand myCmd = new MySqlCommand(Command, mConnection))
+                    {
+                        myCmd.Parameters.AddWithValue("@userID", pullUserID);
+                        myCmd.Parameters.AddWithValue("@skillID", skills[i]);
+
+                        int result = myCmd.ExecuteNonQuery();
+                        mConnection.Close();
+                    }
                 }
             }
 
+            
 
             return code;
         }

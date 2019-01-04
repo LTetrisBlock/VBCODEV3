@@ -104,14 +104,14 @@ namespace VBUser.UserDefs
         /// Adds the new user to the database. 
         /// </summary>
         /// <returns></returns>
-        public int AddNewUserToDatabase()
+        public int AddNewUserToDatabase(string[] i)
         {
             int code = 0;
 
             using (DbUtitlity dbUtil = new DbUtitlity(_inputArray))
             {
                 dbUtil.InputCreds(_dbUserName, _dbPass, _db);
-                dbUtil.CreateANewUser();
+                dbUtil.CreateANewUser(i);
             }
             return code;
         }
